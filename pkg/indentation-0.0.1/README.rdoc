@@ -4,7 +4,7 @@
 
 == DESCRIPTION:
 
-A library of extensions to Ruby's Array and String classes that allow indentation manipulation of Strings and Arrays of Strings. Has the capability of working with multi-line strings. If you frequently use String arrays to manipulate text, see synopsis below for examples of how indentation can make your life easier.
+A small library of extensions to Ruby's Array and String classes that allow indentation manipulation of Strings and Arrays of Strings. Has the capability of working with multi-line strings. If you frequently use String arrays to manipulate text, see synopsis below for examples of how indentation can make your life easier.
 
 == SYNOPSIS:
   
