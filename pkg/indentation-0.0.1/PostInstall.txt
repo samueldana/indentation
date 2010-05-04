@@ -1,5 +1,0 @@
--------------------------------------------------------------------------------
-Thanks for installing the indentation gem! :)
-
-For more information on indentation, see http://indentation.rubyforge.org
--------------------------------------------------------------------------------
