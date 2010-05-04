@@ -1,0 +1,14 @@
+Temp
+test_results
+# Presumes docs are generated from other files
+doc
+.cvs
+.svn
+*.gem
+*.tgz
+*.zip
+*.jar
+.DS_Store
+.localized
+thumbs
+*.mdxml.bak

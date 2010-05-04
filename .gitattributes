@@ -1,0 +1,6 @@
+*.mdxml -crlf -diff -merge
+*.gz -crlf -diff -merge
+*.tiff -crlf -diff -merge
+*.jpg -crlf -diff -merge
+*.pdf -crlf -diff -merge
+*.png -crlf -diff -merge
