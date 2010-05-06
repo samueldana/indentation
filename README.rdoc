@@ -41,7 +41,7 @@ A small library of extensions to Ruby's Array and String classes that allow inde
     "  def method_name\n    # Do stuff\n  end".reset_indentation # => "def method_name\n  # Do stuff\nend"
   
   # Operates on arrays
-    ["  def method_name", "    # Do stuff", "end"].reset_indentation # => ["def method_name", "  # Do stuff", "end"]
+    ["  def method_name", "    # Do stuff", "  end"].reset_indentation # => ["def method_name", "  # Do stuff", "end"]
   
   # Useful for heredocs - must chomp to remove trailing newline
     my_string = <<-EOS.chomp.reset_indentation
@@ -52,7 +52,7 @@ A small library of extensions to Ruby's Array and String classes that allow inde
     my_string # => "def method_name\n  # Do stuff\nend"
 
   # Accepts an indentation modifier
-    " one\n  two".reset_indentation(1) # => "  one\n two"
+    " one\n  two".reset_indentation(1) # => " one\n  two"
     "   one\n  two".reset_indentation(0) # => " one\ntwo" - Default behavior
     " one\n  two".reset_indentation(-1) # => "one\ntwo"
   
@@ -67,7 +67,7 @@ A small library of extensions to Ruby's Array and String classes that allow inde
   
   # Useful combined with indent and join
     vars = ["var1", "var2", "var3", "var4"]
-    method_def = ["def add_up(#{vars.join(', ')}"]
+    method_def = ["def add_up(#{vars.join(', ')})"]
     method_body = vars.append_separator(" + ")
     method_def += method_body.indent
     method_def << "end"
@@ -103,7 +103,7 @@ A small library of extensions to Ruby's Array and String classes that allow inde
 * git clone git://github.com/samueldana/indentation.git
 * cd indentation
 * rake install_gem
-  * OR: rake rvm_install_gem (doesn't use sudo)
+  * Or if using rvm: rake rvm_install_gem (doesn't use sudo)
 
 == LICENSE:
 
