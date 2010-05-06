@@ -281,3 +281,76 @@ describe "Reset Indentation function" do
   end
   
 end
+
+describe "README.rdoc" do
+  it "should have correct examples for indent" do
+
+    # Default indentation is 2 spaces
+      "test".indent.should == "  test"
+
+    # Amount of indentation can be changed
+      "test".indent(3).should == "   test"
+
+    # Indentation character (or string) is set as the second parameter of indent.
+      "test".indent(2, "\t").should == "\t\ttest"
+
+    # Operates on multi-line strings
+      "this\nis\na\ntest".indent.should == "  this\n  is\n  a\n  test"
+
+    # Indent method accepts negative values (Removes tabs, spaces, and supplied indentation string)
+      "  test".indent(-1).should == " test"
+      "\t test".indent(-5).should == "test"
+      "\t--     Test".indent(-10).should == "--     Test"
+      "\t--     Test".indent(-10, '-').should == "Test"
+      "--- Test".indent(-2, '--').should == "- Test"
+
+    # Operates on arrays
+      ["one", "two"].indent.should == ["  one", "  two"]
+      [["one", "  two"], ["uno", "\t\tdos"]].indent.should == [["  one", "    two"], ["  uno", "  \t\tdos"]]
+
+  end
+  
+  it "should have correct examples for reset indentation" do  
+
+    # 'resets' the indentation of a string by finding the least amount of indentation in the String/Array, and
+    # removing that amount from every line.
+      "  def method_name\n    # Do stuff\n  end".reset_indentation.should == "def method_name\n  # Do stuff\nend"
+
+    # Operates on arrays
+      ["  def method_name", "    # Do stuff", "  end"].reset_indentation.should == ["def method_name", "  # Do stuff", "end"]
+
+    # Useful for heredocs - must chomp to remove trailing newline
+      my_string = <<-EOS.chomp.reset_indentation
+        def method_name
+          # Do stuff
+        end
+        EOS
+      my_string.should == "def method_name\n  # Do stuff\nend"
+
+    # Accepts an indentation modifier
+      " one\n  two".reset_indentation(1).should == " one\n  two"
+      "   one\n  two".reset_indentation(0).should == " one\ntwo" # Default behavior
+      " one\n  two".reset_indentation(-1).should == "one\ntwo"
+  end
+  
+  it "should have correct examples for append separator" do
+    
+    # Given an Array of Arrays or an Array of Strings, appends a separator object to all but the last element in the Array.
+    # NOTE: For an Array of Strings the separator object must be a String, since it is appended to other Strings
+      ["arg1", "arg2", "arg3"].append_separator("!").should == ["arg1!", "arg2!", "arg3"]
+      [["line1"], ["line2"], ["line3"]].append_separator("").should == [["line1", ""], ["line2", ""], ["line3"]]
+      [["line1", "line2"], ["line3", "line4"]].append_separator("").should == [["line1", "line2", ""], ["line3", "line4"]]
+
+    # Useful combined with indent and join
+      vars = ["var1", "var2", "var3", "var4"]
+      method_def = ["def add_up(#{vars.join(', ')})"]
+      method_body = vars.append_separator(" + ")
+      method_def += method_body.indent
+      method_def << "end"
+      method_def.join("\n").should == "def add_up(var1, var2, var3, var4)\n  var1 + \n  var2 + \n  var3 + \n  var4\nend"
+
+    # Handy for separating arrays of string arrays
+      test_array = [["this", "is", "a", "test"], ["quick", "brown", "fox"], ["lazy", "typist"]]
+      test_array.append_separator("").join("\n").should == "this\nis\na\ntest\n\nquick\nbrown\nfox\n\nlazy\ntypist"
+  end
+end
