@@ -8,7 +8,7 @@ A small library of extensions to Ruby's Array and String classes that allow inde
 
 == SYNOPSIS:
   
-* Indent
+=== Indent
 
   # Default indentation is 2 spaces
     "test".indent # => "  test"
@@ -34,7 +34,7 @@ A small library of extensions to Ruby's Array and String classes that allow inde
     [["one", "  two"], ["uno", "\t\tdos"]].indent # => [["  one", "    two"], ["  uno", "  \t\tdos"]]
 
 
-* Reset Indentation
+=== Reset Indentation
 
   # 'resets' the indentation of a string by finding the least amount of indentation in the String/Array, and
   # removing that amount from every line.
@@ -57,7 +57,7 @@ A small library of extensions to Ruby's Array and String classes that allow inde
     " one\n  two".reset_indentation(-1) # => "one\ntwo"
   
   
-* Append Separator
+=== Append Separator
 
   # Given an Array of Arrays or an Array of Strings, appends a separator object to all but the last element in the Array.
   # NOTE: For an Array of Strings the separator object must be a String, since it is appended to other Strings
