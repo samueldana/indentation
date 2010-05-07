@@ -1,3 +1,7 @@
+=== 0.0.2 2010-05-07
+* Fixed several typos in docs, updated rspec tests.
+* Published to gemcutter
+
 === 0.0.1 2010-05-03
 
 * Initial release

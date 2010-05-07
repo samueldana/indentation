@@ -4,7 +4,7 @@
 
 == DESCRIPTION:
 
-A small library of extensions to Ruby's Array and String classes that allow indentation manipulation of Strings and Arrays of Strings. Has the capability of working with multi-line strings. If you frequently use String arrays to manipulate text, see synopsis below for examples of how indentation can make your life easier.
+A small library of extensions to Ruby's Array and String classes that allow indentation manipulation of Strings and Arrays of Strings. Has the capability of working with multi-line strings. If you frequently use String arrays to manipulate text, see synopsis (In README.rdoc) for examples of how indentation can make your life easier.
 
 == SYNOPSIS:
   
@@ -96,14 +96,12 @@ A small library of extensions to Ruby's Array and String classes that allow inde
   
 == REQUIREMENTS:
 
-* rake (for installation)
+* none
 
 == INSTALL:
 
-* git clone git://github.com/samueldana/indentation.git
-* cd indentation
-* rake install_gem
-  * Or if using rvm: rake rvm_install_gem (doesn't use sudo)
+* [sudo] gem install indentation
+  * (Use sudo unless using rvm)
 
 == LICENSE:
 
