@@ -1,4 +1,7 @@
-=== 0.0.2 2010-05-07
+=== 0.0.3 2010-05-07
+* Fixed documentation regarding installation and summary
+
+=== 0.0.2 2010-05-05
 * Fixed several typos in docs, updated rspec tests.
 * Published to gemcutter
 
