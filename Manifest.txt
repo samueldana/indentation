@@ -3,11 +3,6 @@ Manifest.txt
 PostInstall.txt
 README.rdoc
 Rakefile
-features/development.feature
-features/step_definitions/common_steps.rb
-features/support/common.rb
-features/support/env.rb
-features/support/matchers.rb
 lib/indentation.rb
 lib/indentation/array_mod.rb
 lib/indentation/string_mod.rb

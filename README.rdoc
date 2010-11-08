@@ -93,6 +93,17 @@ A small library of extensions to Ruby's Array and String classes that allow inde
       # 
       # lazy
       # typist
+
+
+=== Find Least Indentation
+
+  # Given a String or Array of Strings, finds the least indentation on any line. Splits on newlines found within strings
+  # to find the least indentation within a multi-line String
+  "  test".find_least_indentation # => 2
+  "   three\n  two \n one".find_least_indentation # => 1
+  ["  two", "   three", "    four"].find_least_indentation # => 2
+  ["  two", "   three", ["    four", "     five\n one"]].find_least_indentation # => 1
+  
   
 == REQUIREMENTS:
 
