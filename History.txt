@@ -1,5 +1,9 @@
-=== 0.0.4 2010-11-08
+=== 0.0.4 2011-02-17
 * Fixed documentation to include find_least_indentation function
+* Added options hash to find_least_indentation function with options to:
+  * Ignore blank lines (zero-length lines)
+  * Ignore empty lines (whitespace-only lines)
+* Modified specs to use rspec >= 2.0
 
 === 0.0.3 2010-05-07
 * Fixed documentation regarding installation and summary

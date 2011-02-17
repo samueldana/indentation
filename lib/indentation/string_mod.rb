@@ -22,8 +22,18 @@ class String
   end
   
   # Split across newlines and return the fewest number of indentation characters found on each line
-  def find_least_indentation
-    empty? ? 0 : split("\n", -1).collect{|substr| substr.match(/^[ \t]*/).to_s.length}.min
+  def find_least_indentation(options = {:ignore_blank_lines => true, :ignore_empty_lines => true})
+    # Cannot ignore empty lines unless we're also ignoring blank lines
+    options[:ignore_blank_lines] = options[:ignore_empty_lines] ? true : options[:ignore_blank_lines]
+    empty? ? 0 : split("\n", -1).reject{|line|
+                                        if options[:ignore_empty_lines]
+                                          line.strip.empty?
+                                        elsif options[:ignore_blank_lines]
+                                          line.empty?
+                                        else
+                                          false
+                                        end
+                                      }.collect{|substr| substr.match(/^[ \t]*/).to_s.length}.min
   end
   
   # Find the least indentation of all lines within this string and remove that amount (if any)

@@ -104,6 +104,19 @@ A small library of extensions to Ruby's Array and String classes that allow inde
   ["  two", "   three", "    four"].find_least_indentation # => 2
   ["  two", "   three", ["    four", "     five\n one"]].find_least_indentation # => 1
   
+  # Option to ignore blank (no characters whatsoever) lines. 
+  # Note, disabling this option will automatically disable :ignore_empty_lines
+  # Default => true
+    "   three\n".find_least_indentation # => 3
+    "   three\n".find_least_indentation(:ignore_blank_lines => false) # => 0
+  
+  # Option to ignore both blank lines (no characters whatsoever) and empty lines (whitespace-only)
+  # Default => true    
+    "   three\n ".find_least_indentation # => 3
+    "   three\n ".find_least_indentation(:ignore_empty_lines => false) # => 1
+    "   three\n".find_least_indentation(:ignore_empty_lines => false) # => 3
+    "   three\n".find_least_indentation(:ignore_empty_lines => false, :ignore_blank_lines => false) # => 0
+  
   
 == REQUIREMENTS:
 

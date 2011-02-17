@@ -55,7 +55,7 @@ class Array
   end
   
   # Get the least indentation of all elements
-  def find_least_indentation
+  def find_least_indentation(options = {:ignore_blank_lines => true, :ignore_empty_lines => true})
     self.collect{|array_element| array_element.find_least_indentation }.min
   end
   

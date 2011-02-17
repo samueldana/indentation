@@ -353,4 +353,30 @@ describe "README.rdoc" do
       test_array = [["this", "is", "a", "test"], ["quick", "brown", "fox"], ["lazy", "typist"]]
       test_array.append_separator("").join("\n").should == "this\nis\na\ntest\n\nquick\nbrown\nfox\n\nlazy\ntypist"
   end
+  
+  it "should have correct examples for find_least_indentation" do
+    
+    # Given a String or Array of Strings, finds the least indentation on any line. Splits on newlines found within strings
+    # to find the least indentation within a multi-line String
+      "  test".find_least_indentation # => 2
+      "   three\n  two \n one".find_least_indentation # => 1
+      ["  two", "   three", "    four"].find_least_indentation # => 2
+      ["  two", "   three", ["    four", "     five\n one"]].find_least_indentation # => 1
+
+    # Option to ignore blank (no characters whatsoever) lines. 
+    # Note, disabling this option will automatically disable :ignore_empty_lines
+    # Default => true
+      "   three\n".find_least_indentation # => 3
+      "   three\n".find_least_indentation(:ignore_blank_lines => false) # => 0
+    
+    # Option to not only ignore both blank lines (no characters whatsoever) and empty lines (whitespace-only)
+    # Default => true    
+      "   three\n ".find_least_indentation # => 3
+      "   three\n ".find_least_indentation(:ignore_empty_lines => false) # => 1
+      "   three\n".find_least_indentation(:ignore_empty_lines => false) # => 3
+      "   three\n".find_least_indentation(:ignore_empty_lines => false, :ignore_blank_lines => false) # => 0
+  end
+      
+      
+    
 end
