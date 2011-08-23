@@ -1,5 +1,0 @@
--------------------------------------------------------------------------------
-Thanks for installing the indentation gem! :)
-
-For current information on indentation, see http://samueldana.github.com/indentation/
--------------------------------------------------------------------------------
