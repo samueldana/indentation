@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Samuel Dana"]
   s.email       = ["s.dana@prometheuscomputing.com"]
   s.homepage    = ""
-  s.summary     = %q{A plugin for Ruby Sequel that provides the ability to track changes in the database.}
-  s.description = %q{A plugin for Ruby Sequel that provides the ability to track changes in the database.}
+  s.summary     = %q{A library of extensions to Ruby's Array and String classes that allow indentation manipulation of Strings and Arrays of Strings.}
+  s.description = %q{A library of extensions to Ruby's Array and String classes that allow indentation manipulation of Strings and Arrays of Strings.}
 
   s.rubyforge_project = "indentation"
   
