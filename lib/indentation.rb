@@ -3,4 +3,3 @@ $:.unshift(File.dirname(__FILE__)) unless
 
 require 'indentation/string_mod.rb'
 require 'indentation/array_mod.rb'
-require 'indentation/version.rb'
