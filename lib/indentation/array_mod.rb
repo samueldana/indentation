@@ -71,4 +71,25 @@ class Array
     indent!(-find_least_indentation + modifier)
   end
   
+  # Join an array of strings using English list punctuation.
+  def english_join(conjunction = 'and', separator = ', ', oxford_comma = true)
+    len = self.length
+    return '' if len == 0
+    return self[0].to_s if len == 1
+    return "#{self[0].to_s} #{conjunction} #{self[1].to_s}" if len == 2
+    join_str = ''
+    self.each_with_index{|ele, i|
+      str = if !oxford_comma && i == len - 2
+          "#{ele} #{conjunction} "
+        elsif i == len - 2
+          "#{ele}#{separator}#{conjunction} "
+        elsif i == len - 1
+          "#{ele}"
+        else
+          "#{ele}#{separator}"
+        end
+      join_str << str
+    }
+    join_str
+  end
 end

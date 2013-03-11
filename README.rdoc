@@ -6,7 +6,7 @@
 
 A small library of extensions to Ruby's Array and String classes that allow indentation manipulation of Strings and Arrays of Strings. Has the capability of working with multi-line strings. If you frequently use String arrays to manipulate text, see synopsis (In README.rdoc) for examples of how indentation can make your life easier.
 
-== SYNOPSIS:
+== EXAMPLES:
   
 === Indent
 
@@ -53,7 +53,7 @@ A small library of extensions to Ruby's Array and String classes that allow inde
 
   # Accepts an indentation modifier
     " one\n  two".reset_indentation(1) # => " one\n  two"
-    "   one\n  two".reset_indentation(0) # => " one\ntwo" - Default behavior
+    "   one\n  two".reset_indentation(0) # => " one\ntwo" # Default behavior
     " one\n  two".reset_indentation(-1) # => "one\ntwo"
   
   
@@ -111,12 +111,29 @@ A small library of extensions to Ruby's Array and String classes that allow inde
     "   three\n".find_least_indentation(:ignore_blank_lines => false) # => 0
   
   # Option to ignore both blank lines (no characters whatsoever) and empty lines (whitespace-only)
-  # Default => true    
+  # Implies :ignore_blank_lines => true when enabled
+  # Default => true
     "   three\n ".find_least_indentation # => 3
     "   three\n ".find_least_indentation(:ignore_empty_lines => false) # => 1
-    "   three\n".find_least_indentation(:ignore_empty_lines => false) # => 3
-    "   three\n".find_least_indentation(:ignore_empty_lines => false, :ignore_blank_lines => false) # => 0
+    "   three\n".find_least_indentation # => 3
+    "   three\n".find_least_indentation(:ignore_empty_lines => false) # => 0
   
+  # To ignore blank, but not empty, lines:
+    "   three\n ".find_least_indentation(:ignore_blank_lines => true, :ignore_empty_lines => false) # => 1
+    "   three\n".find_least_indentation(:ignore_blank_lines => true, :ignore_empty_lines => false) # => 3
+    
+=== English Array Join
+
+  # Given an Array of Strings and an optional conjunction, joins them using English list punctuation
+  # to find the least indentation within a multi-line String
+  ['one', 'two'].english_join # => "one and two"
+  ['one', 'two', 'three'].english_join # => "one, two, and three"
+  
+  # Different conjunction
+  ['one', 'two', 'three'].english_join('or') # => "one, two, or three"
+  
+  # Different separator
+  ['one', 'two', 'three'].english_join('or', ' ') # => "one two or three"
   
 == REQUIREMENTS:
 
