@@ -32,15 +32,15 @@ module Indentation
   #   * :frankenstein (implies packaging as gem - contains BOTH ruby and java code - will probably deprecate this in favor of two separate projects)
   LANGUAGE = :ruby
   # This differs from Runtime version - this specifies the version of the syntax of LANGUAGE
-  LANGUAGE_VERSION = ['> 1.8.1', '< 1.9.3']
+  LANGUAGE_VERSION = ['> 1.8.1']
   # This is different from aGem::Specification.platform, which appears to be concerned with OS.
   # This defines which implentation of Ruby, Java, etc can be used.
   # Required Hash, in same format as DEPENDENCIES_RUBY.
   # The version part is used by required_ruby_version
   # Allowable keys depend on LANGUAGE. They are in VALID_<language.upcase>_RUNTIMES
   RUNTIME_VERSIONS = {
-    :mri => ['> 1.8.1', '< 1.9.3'],
-    :jruby => ['1.6.4']
+    :mri => ['>= 1.8.1'],
+    :jruby => ['>= 1.6.4']
   }
   # Required Symbol
   # Choices are currently:
