@@ -141,8 +141,7 @@ A small library of extensions to Ruby's Array and String classes that allow inde
 
 == INSTALL:
 
-* [sudo] gem install indentation
-  * (Use sudo unless using rvm)
+gem install indentation
 
 == LICENSE:
 
