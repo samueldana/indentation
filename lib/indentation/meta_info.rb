@@ -64,7 +64,10 @@ module Indentation
   DEPENDENCIES_RUBY = { }
   DEPENDENCIES_MRI = { }
   DEPENDENCIES_JRUBY = { }
-  DEVELOPMENT_DEPENDENCIES_RUBY = { } # test-unit is reccomended but not required (color codes Test::Unit test results)
+  DEVELOPMENT_DEPENDENCIES_RUBY = {
+    :rspec => '~> 3.7'
+    :simplecov => '~> 0.16'
+  } # test-unit is reccomended but not required (color codes Test::Unit test results)
   DEVELOPMENT_DEPENDENCIES_MRI = { }
   DEVELOPMENT_DEPENDENCIES_JRUBY = { }
   

@@ -1,4 +1,14 @@
 require 'rspec'
+# Enable old syntax for Rspec 3.0
+RSpec.configure do |config|
+  config.expect_with :rspec do |c|
+    c.syntax = [:should, :expect]
+  end
+end
+require 'simplecov'
+SimpleCov.start do
+  add_filter 'spec/'
+end
 $:.unshift(File.dirname(__FILE__) + '/../lib')
 require 'indentation'
 
