@@ -8,7 +8,7 @@ module Indentation
   # Required String
   GEM_NAME = "indentation"
   # Required String
-  VERSION = '0.1.1'
+  VERSION = '0.1.2'
   # Optional String or Array of Strings
   AUTHORS = ["Sam Dana"]
   # Optional String or Array of Strings
@@ -65,7 +65,7 @@ module Indentation
   DEPENDENCIES_MRI = { }
   DEPENDENCIES_JRUBY = { }
   DEVELOPMENT_DEPENDENCIES_RUBY = {
-    :rspec => '~> 3.7'
+    :rspec => '~> 3.7',
     :simplecov => '~> 0.16'
   } # test-unit is reccomended but not required (color codes Test::Unit test results)
   DEVELOPMENT_DEPENDENCIES_MRI = { }

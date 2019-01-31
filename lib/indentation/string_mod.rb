@@ -1,3 +1,4 @@
+# Monkey patch String with indentation methods
 class String
   # Return an indented copy of this string
   # Arguments:
@@ -22,18 +23,21 @@ class String
   end
   
   # Split across newlines and return the fewest number of indentation characters found on each line
-  def find_least_indentation(options = {:ignore_blank_lines => true, :ignore_empty_lines => true})
-    # Cannot ignore empty lines unless we're also ignoring blank lines
-    options[:ignore_blank_lines] = options[:ignore_empty_lines] ? true : options[:ignore_blank_lines]
-    empty? ? 0 : split("\n", -1).reject{|line|
-                                        if options[:ignore_empty_lines]
-                                          line.strip.empty?
-                                        elsif options[:ignore_blank_lines]
-                                          line.empty?
-                                        else
-                                          false
-                                        end
-                                      }.collect{|substr| substr.match(/^[ \t]*/).to_s.length}.min
+  # options:
+  #   :include_whitespace_only_lines => false  # if set to true, lines with only whitespace will be checked for least indentation
+  #   :include_blank_lines => false  # if set to true, blank lines will cause the method to return 0
+  def find_least_indentation(options = {})
+    return 0 if empty?
+    Indentation.parse_legacy_find_least_indentation_options!(options)
+    # Split string into lines
+    lines = split("\n", -1)
+    # Reject any lines that shouldn't be included accd to include_* options
+    lines.reject!{|line|
+      (!options[:include_whitespace_only_lines] && !line.empty? && line.strip.empty?) ||
+        (!options[:include_blank_lines] && line.empty?)
+    }
+    # Collect the amount of indentation for each remaining line and return the smallest
+    lines.collect!{|substr| substr.match(/^[ \t]*/).to_s.length}.min
   end
   
   # Find the least indentation of all lines within this string and remove that amount (if any)
@@ -49,14 +53,14 @@ class String
   end
   
   private
+  
   def _indent(num = nil, i_char = ' ')
     # Define number of indentations to use
     number = num
     # Default number to 2 if spaces or 1 if other
     number ||= (i_char == ' ') ? 2 : 1
   
-    case
-    when number >= 0
+    if number >= 0
       split("\n", -1).collect{|line| (i_char * number) + line}.join("\n")
     else
       i_regexp = Regexp.new("^([ \t]|#{i_char})")
@@ -70,5 +74,4 @@ class String
       end.join("\n")
     end
   end
-  
 end

@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/BlockLength, Lint/Void
 require File.dirname(__FILE__) + '/spec_helper.rb'
 
 # Time to add your specs!
@@ -208,6 +209,9 @@ describe "Find Least Indentation function" do
   it "should return the least amount of indentation on any line within an Array or String" do
     test_string_one = "   \tThis\n         is a\n \ttest"
     test_string_two = "     \t Test\n             Number\n                  Two"
+    # blank, whitespace-only w/ 3 spaces, 6 spaces
+    test_string_three = "\n   \n      foo"
+    
     test_string_one.find_least_indentation.should == 2
     test_string_two.find_least_indentation.should == 7
     
@@ -219,6 +223,34 @@ describe "Find Least Indentation function" do
     test_array.find_least_indentation.should == 0
     test_array << ""
     test_array.find_least_indentation.should == 0
+    
+    # Test passing options
+    test_array = [test_string_three]
+    test_array.find_least_indentation.should == 6
+    test_array.find_least_indentation(:include_whitespace_only_lines => true, :include_blank_lines => true).should == 0
+    test_array.find_least_indentation(:include_whitespace_only_lines => true).should == 3
+    test_array.find_least_indentation(:include_blank_lines => true).should == 0
+  end
+  
+  it "should still function using legacy options" do
+    # Option to recognize blank (no characters whatsoever) lines when counting least indentation
+    "   three\n".find_least_indentation.should == 3
+    "   three\n".find_least_indentation(:ignore_blank_lines => false).should == 0
+    "   three\n  ".find_least_indentation.should == 3
+    "   three\n  ".find_least_indentation(:ignore_blank_lines => false).should == 2
+  
+    # Option to recognize whitespace-only or blank lines when counting least indentation
+    # Note: setting this option also sets :ignore_blank_lines to false unless otherwise specified
+    "   three\n ".find_least_indentation.should == 3
+    "   three\n ".find_least_indentation(:ignore_empty_lines => false).should == 1
+    "   three\n".find_least_indentation.should == 3
+    "   three\n".find_least_indentation(:ignore_empty_lines => false).should == 0
+    "   three\n  \n".find_least_indentation(:ignore_empty_lines => false).should == 0
+    "   three\n  \n".find_least_indentation(:ignore_empty_lines => false, :ignore_blank_lines => true).should == 2
+    
+    # Option to recognize whitespace-only, but not blank lines
+    "   three\n ".find_least_indentation(:ignore_blank_lines => true, :ignore_empty_lines => false).should == 1
+    "   three\n".find_least_indentation(:ignore_blank_lines => true, :ignore_empty_lines => false).should == 3
   end
 end
 
@@ -301,3 +333,4 @@ describe "English Join function" do
     ['one', 'two', 'three'].english_join('and', ', ', false).should == 'one, two and three'
   end
 end
+# rubocop:enable Metrics/BlockLength, Lint/Void

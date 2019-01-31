@@ -9,48 +9,40 @@ require 'simplecov'
 SimpleCov.start do
   add_filter 'spec/'
 end
-$:.unshift(File.dirname(__FILE__) + '/../lib')
+$LOAD_PATH.unshift(File.dirname(__FILE__) + '/../lib')
 require 'indentation'
 
 def rdoc_examples(examples_header = /^Examples:/i)
-  readme_rdoc = File.join(File.dirname(__FILE__), '../README.rdoc')
+  readme_rdoc_filename = 'README.rdoc'
+  readme_rdoc = File.join(File.dirname(__FILE__), '..', readme_rdoc_filename)
   rdoc_content = File.read(readme_rdoc)
+  all_lines = rdoc_content.split("\n")
   example_content = rdoc_content.split(/^== /).select{|p| p =~ examples_header}.first
   raise "Couldn't find Examples header matching: #{examples_header}" unless example_content
-  examples_content = example_content.split('=== ')
+  example_sections = example_content.split(/^=== /)
   examples = {}
   # Skipping first 'example' since it is "Examples:\n"
-  examples_content[1..-1].each do |excon|
-    lines = excon.split("\n")
+  example_sections[1..-1].each do |section|
+    lines = section.split("\n")
+    # Get starting line number for this section by adding 1 to the line's index
+    start_line = all_lines.index{|l| l.match?(/=== #{lines.first}/)} + 1
     example_name = lines.shift.delete(':')
-    example_code = []
-    example_code << "$stdout = StringIO.new"
-    lines.each do |line|
-      l = line
-      if l =~ / # => /
-        code, check = line.split(/ # => /)
-        # Could make this more sophisticated, but just going with ==
-        l = code + ".should == " + check
-      elsif l =~ /(.*) ?# :([^ ]*) => (.*)$/
-        code = $~[1]
-        var = $~[2].to_sym
-        value = $~[3]
-        case var
-        when :stdout
-          l = "#{code}\n $stdout.string.chomp.split(%!\n!).last.should == %!#{value}!"
-        else
-          raise "Unkown variable type: #{var}"
-        end
-      end
-      example_code << l
-    end
-    # Debugging to show all of stdout during example
-    #example_code << "stdoutput = $stdout.string"
-    example_code << "$stdout = STDOUT"
-    #example_code << "puts stdoutput"
-    examples[example_name.to_sym] = example_code.join("\n")
+    example_code = make_executable_examples_from_section(lines)
+    examples[example_name.to_sym] = {:code => example_code.join("\n"), :path => readme_rdoc_filename, :lineno => start_line}
   end
   examples
+end
+
+def make_executable_examples_from_section(section_lines)
+  example_code = []
+  section_lines.each do |line|
+    next if line.strip.empty?
+    if line.match?(/ # == /)
+      rtest, check = line.split(/ # == /)
+      line = "expect(#{rtest}).to eq(#{check})"
+    end
+    example_code << line
+  end
 end
 
 def time

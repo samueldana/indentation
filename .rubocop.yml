@@ -1,0 +1,71 @@
+Metrics/LineLength:
+  Max: 200
+
+Metrics/MethodLength:
+  Max: 50
+
+Layout/TrailingWhitespace:
+  Enabled: false
+
+Layout/SpaceBeforeBlockBraces:
+  EnforcedStyle: no_space
+
+Style/NumericPredicate:
+  Enabled: false
+
+Layout/SpaceInsideBlockBraces:
+  Enabled: false
+
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+
+Style/BlockDelimiters:
+  Enabled: false
+
+# Currently no option to only align with 'end'
+# Don't want to align with 'if' since this can be an assigment like 'x = if ...'
+Layout/ElseAlignment:
+  Enabled: false
+Layout/EndAlignment:
+  Enabled: false
+
+Style/MutableConstant:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: false
+
+Style/PercentLiteralDelimiters:
+  Enabled: false
+
+Style/UnneededPercentQ:
+  Enabled: false
+
+Style/HashSyntax:
+  Enabled: false
+
+Layout/SpaceInsideHashLiteralBraces:
+  Enabled: false
+
+Style/TernaryParentheses:
+  Enabled: false
+
+Style/WordArray:
+  Enabled: false
+
+Style/SymbolArray:
+  Enabled: false
+
+Layout/ClosingHeredocIndentation:
+  Enabled: false
+
+Naming/HeredocDelimiterNaming:
+  Enabled: false
+
+# Relax complexity-related metrics
+Metrics/AbcSize:
+  Max: 30
+Metrics/CyclomaticComplexity:
+  Max: 15
+Metrics/PerceivedComplexity:
+  Max: 15

@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+# This script requires the spec helper in the current directory or the ./spec directory and launches IRB
+
+require 'irb'
+$LOAD_PATH.unshift '.'
+$LOAD_PATH.unshift './spec/'
+require "spec_helper"
+IRB.start
