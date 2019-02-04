@@ -1,4 +1,5 @@
 # rubocop:disable Metrics/BlockLength, Lint/Void
+# Disable Lint/Void cop since it doesn't understand RSpec's "should X" syntax
 require File.dirname(__FILE__) + '/spec_helper.rb'
 
 # Time to add your specs!
@@ -331,6 +332,57 @@ describe "English Join function" do
   
   it "should allow turning off the oxford comma" do
     ['one', 'two', 'three'].english_join('and', ', ', false).should == 'one, two and three'
+  end
+end
+
+describe "Performance" do
+  before(:all) do
+    array_length = 500
+    word_length = 25
+    # Create an array of random strings
+    @long_string_array = random_string_array(array_length, word_length)
+    # Create an indented string array where most lines are indented 2, with one indented 4
+    @long_indented_string_array = random_string_array(array_length, word_length).indent
+    @long_indented_string_array[3].indent!
+  end
+  
+  # NOTE: I set expected performance at 5x what it takes on my desktop, so false failures are unlikely here
+  #       I've also set a test to catch if performance is greater than expected. The performance times
+  #       should be adjusted in this case. -SD
+  it "should perform indent quickly" do
+    expect{ @long_string_array.indent }.to perform_under(7.5).ms.sample(3)
+    long_string_array_dup = @long_string_array.dup
+    expect{ long_string_array_dup.indent! }.to perform_under(7.5).ms.sample(3)
+    # Catch performance improvements
+    expect(time{@long_string_array.indent} * 1000).to be > 1
+  end
+  
+  it "should perform reset_indentation quickly" do
+    expect{ @long_indented_string_array.reset_indentation }.to perform_under(20).ms.sample(3)
+    long_indented_string_array_dup = @long_indented_string_array.dup
+    expect{ long_indented_string_array_dup.reset_indentation! }.to perform_under(20).ms.sample(3)
+    # Catch performance improvements
+    expect(time{@long_indented_string_array.reset_indentation} * 1000).to be > 4
+  end
+  
+  it "should perform append_separator quickly" do
+    expect{ @long_string_array.append_separator }.to perform_under(1.5).ms.sample(3)
+    long_string_array_dup = @long_string_array.dup
+    expect{ long_string_array_dup.append_separator! }.to perform_under(1.5).ms.sample(3)
+    # Catch performance improvements
+    expect(time{@long_string_array.append_separator} * 1000).to be > 0.2
+  end
+  
+  it "should perform find_least_indentation quickly" do
+    expect{ @long_indented_string_array.find_least_indentation }.to perform_under(10).ms.sample(3)
+    # Catch performance improvements
+    expect(time{@long_indented_string_array.find_least_indentation} * 1000).to be > 1.5
+  end
+  
+  it "should perform english_join quickly" do
+    expect{ @long_string_array.english_join }.to perform_under(5).ms.sample(3)
+    # Catch performance improvements
+    expect(time{@long_string_array.english_join} * 1000).to be > 0.4
   end
 end
 # rubocop:enable Metrics/BlockLength, Lint/Void

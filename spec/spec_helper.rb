@@ -1,9 +1,11 @@
 require 'rspec'
+require 'rspec-benchmark'
 # Enable old syntax for Rspec 3.0
 RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = [:should, :expect]
   end
+  config.include RSpec::Benchmark::Matchers
 end
 require 'simplecov'
 SimpleCov.start do
@@ -12,6 +14,10 @@ end
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../lib')
 require 'indentation'
 
+# Finds code examples in README.rdoc and executes them to ensure accuracy of docs.
+# This method looks for the '===' headers under the '== Examples:' header, and then
+# executes a comparison for any lines terminated with the comment, "# == X" where
+# X is the expected value.
 def rdoc_examples(examples_header = /^Examples:/i)
   readme_rdoc_filename = 'README.rdoc'
   readme_rdoc = File.join(File.dirname(__FILE__), '..', readme_rdoc_filename)
@@ -21,7 +27,7 @@ def rdoc_examples(examples_header = /^Examples:/i)
   raise "Couldn't find Examples header matching: #{examples_header}" unless example_content
   example_sections = example_content.split(/^=== /)
   examples = {}
-  # Skipping first 'example' since it is "Examples:\n"
+  # Skipping first example section since it is "Examples:\n"
   example_sections[1..-1].each do |section|
     lines = section.split("\n")
     # Get starting line number for this section by adding 1 to the line's index
@@ -33,6 +39,7 @@ def rdoc_examples(examples_header = /^Examples:/i)
   examples
 end
 
+# Given an example section, derive RSpec expectation tests and return as an array
 def make_executable_examples_from_section(section_lines)
   example_code = []
   section_lines.each do |line|
@@ -43,6 +50,16 @@ def make_executable_examples_from_section(section_lines)
     end
     example_code << line
   end
+end
+
+# Make a array with the given length with random strings of the given length.
+def random_string_array(array_length, string_length)
+  str_array = []
+  char_map = [('a'..'z'), ('A'..'Z'), ('0'..'9')].map(&:to_a).flatten
+  array_length.times do
+    str_array << (0..string_length).map{ char_map[rand(char_map.length)] }.join
+  end
+  str_array
 end
 
 def time

@@ -1,5 +1,6 @@
-require 'indentation/string_mod.rb'
-require 'indentation/array_mod.rb'
+require 'indentation/meta_info'
+require 'indentation/string_mod'
+require 'indentation/array_mod'
 
 # Helpers for String and Array indentation methods
 module Indentation
